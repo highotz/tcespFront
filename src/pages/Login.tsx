@@ -1,6 +1,6 @@
 import { Button } from '../components/Button';
 
-import logo_tcesp from '../assets/images/logo_login.jpeg';
+import logo_tcesp from '../assets/images/logotipo_tcesp.svg';
 import '../styles/login.scss';
 
 export function Login() {
@@ -24,7 +24,7 @@ export function Login() {
 
             <input id="senha" type="text" placeholder="Digite sua senha" />
 
-            <Button type="submit">Entrar na sala</Button>
+            <Button type="submit">Entrar</Button>
           </form>
         </div>
       </main>
