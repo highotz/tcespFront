@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/react-in-jsx-scope */
+
 import { Button } from '../components/Button';
 import { LogoutButton } from '../components/LogoutButton';
 
-import logo_tcesp_home from '../assets/images/logo_tecesp_home.svg';
+import logoTcespHome from '../assets/images/logo_tecesp_home.svg';
 
 import '../styles/header.scss';
 
@@ -9,7 +12,7 @@ export function CadastroMunicipio() {
   return (
     <div id="page-cadastro">
       <header>
-        <img src={logo_tcesp_home} alt="logo TCESP" />
+        <img src={logoTcespHome} alt="logo TCESP" />
 
         <LogoutButton>Sair</LogoutButton>
       </header>

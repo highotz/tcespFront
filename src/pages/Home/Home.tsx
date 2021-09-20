@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import { Link } from 'react-router-dom';
 import React, { useState, useRef } from 'react';
 import { FiChevronsLeft } from 'react-icons/fi';
 import {
@@ -31,7 +32,9 @@ const Home: React.FC = () => {
           <h1>Home</h1>
           <ul>
             Cadastro
-            <li>Municipios</li>
+            <li>
+              <Link to="/register_city">Municipio</Link>
+            </li>
           </ul>
         </div>
       </SideBar>

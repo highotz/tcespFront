@@ -1,6 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/button-has-type */
 import { ButtonHTMLAttributes } from 'react';
 
-import '../styles/button.scss'
+import '../styles/button.scss';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
