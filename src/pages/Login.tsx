@@ -1,4 +1,5 @@
-import logo_tcesp from '../assets/images/logo_login.jpeg';
+import React from 'react';
+import LogoTcesp from '../assets/images/logo_login.jpeg';
 import '../styles/login.scss';
 
 export function Login() {
@@ -15,10 +16,10 @@ export function Login() {
 
       <main>
         <div className="main-content">
-          <img src={logo_tcesp} alt="TCESP" />
+          <img src={LogoTcesp} alt="TCESP" />
           <form>
-            <input type="text" placeholder="Digite seu email"/>
-            <input type="text" placeholder="Digite sua senha"/>
+            <input type="text" placeholder="Digite seu email" />
+            <input type="text" placeholder="Digite sua senha" />
           </form>
         </div>
       </main>
