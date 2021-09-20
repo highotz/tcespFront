@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/react-in-jsx-scope */
-import { Link } from 'react-router-dom';
+
+import { Link, useHistory } from 'react-router-dom';
 import { Button } from '../components/Button';
 
 import logoTcesp from '../assets/images/logotipo_tcesp.svg';
@@ -7,6 +10,11 @@ import logoTcesp from '../assets/images/logotipo_tcesp.svg';
 import '../styles/login.scss';
 
 export function Login() {
+  const history = useHistory();
+
+  async function handleDirectToHome() {
+    history.push('/home');
+  }
   return (
     <div id="page-login">
       <aside>
@@ -27,7 +35,7 @@ export function Login() {
 
             <input id="senha" type="text" placeholder="Digite sua senha" />
 
-            <Button type="submit">
+            <Button onClick={handleDirectToHome} type="submit">
               <Link to="/home">Entrar</Link>
             </Button>
           </form>
