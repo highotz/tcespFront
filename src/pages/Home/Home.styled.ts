@@ -18,11 +18,12 @@ interface Props {
 export const SideBar = styled.div<Props>`
   width: ${({ open }) => (open ? '20%' : '5%')};
   height: ${({ open }) => (open ? '100%' : '5%')};
-  background: ${({ open }) => (open ? '#d90429' : 'none')};
+  background: ${({ open }) => (open ? '#9a3233' : 'none')};
   display: flex;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-70%)')};
   transition: width 0.3s ease-in-out;
   flex-direction: column;
+  font-size: 14px;
 
   button {
     color: ${({ open }) => (open ? 'white' : 'black')};
@@ -66,7 +67,7 @@ export const Content = styled.div`
 export const NavBar = styled.nav`
   width: 100%;
   height: 6%;
-  background: #d90429;
+  background: #9a3233;
   display: flex;
   margin-bottom: 2%;
   /* border-top-left-radius: 10px;
@@ -115,9 +116,10 @@ export const TopProblems = styled.section`
 `;
 
 export const Footer = styled.footer`
-  width: 100%;
+  width: 95%;
   height: 4%;
   display: flex;
+  margin-left: 20px;
   justify-content: space-between;
   align-items: center;
   /* border: solid 1px; */

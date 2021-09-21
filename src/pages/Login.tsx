@@ -2,8 +2,8 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/react-in-jsx-scope */
 
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from '../components/Button';
+import { useHistory, Link } from 'react-router-dom';
+import { Button } from '../components/Button/Button';
 
 import logoTcesp from '../assets/images/logotipo_tcesp.svg';
 
@@ -36,7 +36,7 @@ export function Login() {
             <input id="senha" type="text" placeholder="Digite sua senha" />
 
             <Button onClick={handleDirectToHome} type="submit">
-              <Link to="/home">Entrar</Link>
+              Entrar
             </Button>
           </form>
         </div>
