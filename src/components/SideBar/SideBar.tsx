@@ -23,7 +23,6 @@ const SideMenu: React.FC = () => {
         />
       </button>
       <div style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
-        <h1>Home</h1>
         <ul>
           Menu:
           <li>
