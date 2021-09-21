@@ -1,74 +1,29 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import React from 'react';
 
-import { Link } from 'react-router-dom';
-import React, { useState, useRef } from 'react';
-import { FiChevronsLeft } from 'react-icons/fi';
-import {
-  Container,
-  SideBar,
-  Content,
-  NavBar,
-  Resume,
-  Footer,
-  TopProblems,
-  Graphs,
-} from './Home.styled';
+import { Container, Content, Resume } from './Home.styled';
+
+import TinyLines from '../../components/Footer/Footer';
+import SideMenu from '../../components/SideBar/SideBar';
+import Header from '../../components/Header/Header';
+import Graphs from '../../components/Graphs/Graphs';
+import TopProblem from '../../components/TopProblems/TopProblems';
 
 const Home: React.FC = () => {
-  const [isOpen, setOpen] = useState(true);
   return (
     <Container>
-      <SideBar open={isOpen}>
-        <button type="button" onClick={() => setOpen(!isOpen)}>
-          <FiChevronsLeft
-            style={{
-              transform: isOpen ? 'rotateY(0)' : 'rotateY(180deg) ',
-              animation: 'transform 0.3s ease-in-out',
-            }}
-            size={30}
-          />
-        </button>
-        <div style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
-          <h1>Home</h1>
-          <ul>
-            Cadastros:
-            <li>
-              <Link to="/register_city">Municipio</Link>
-            </li>
-          </ul>
-        </div>
-      </SideBar>
+      <SideMenu>
+        <h1>Home</h1>
+      </SideMenu>
       <Content>
-        <NavBar>
-          <h1>Nav bar</h1>
-        </NavBar>
+        <Header />
         <Resume>
-          <Graphs>
-            <div>
-              <h1>Graficos</h1>
-            </div>
-            <div>
-              <h1>Graficos</h1>
-            </div>
-          </Graphs>
-          <TopProblems>
-            <div>
-              <h1>top municipios problemas</h1>
-            </div>
-            <div>
-              <h1>Chamados abertos</h1>
-            </div>
-          </TopProblems>
+          <Graphs />
+          <TopProblem />
         </Resume>
-        <Footer>
-          <p>FIAP</p>
-          <p>
-            {' '}
-            <strong>Audit Center</strong> ®
-          </p>
-          <p>TCESP</p>
-        </Footer>
+        <TinyLines />
       </Content>
     </Container>
   );
