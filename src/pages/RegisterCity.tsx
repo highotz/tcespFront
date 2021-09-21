@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/react-in-jsx-scope */
 
@@ -17,7 +18,7 @@ export function CadastroMunicipio() {
         <div className="cadastro-municipio">
           <strong>Cadastro dos Sites dos Municípios</strong>
           <div className="form-cadastro">
-            <form action="">
+            <form>
               <label htmlFor="municipio">Município:</label>
               <input
                 id="municipio"
