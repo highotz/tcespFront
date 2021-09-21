@@ -10,7 +10,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Route path="/" exact component={Login} />
       <Route path="/home" exact component={Home} />
-      <Route path="/register_city" exact component={CadastroMunicipio} />
+      <Route path="/register-city" exact component={CadastroMunicipio} />
       <GlobalStyle />
     </BrowserRouter>
   );
