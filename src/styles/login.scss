@@ -2,11 +2,13 @@
   display: flex;
   align-items: stretch;
   height: 100vh;
+  width: 100vw;
+
+
 
   aside {
-    flex: 7;
-
-    background: #9a3233;
+    width: 50%;
+    background: #3A81C3;
     color: #fff;
 
     display: flex;
@@ -16,7 +18,7 @@
     padding: 120px 80px;
 
     strong {
-      font: 700 36px "Poppins", sans-serif;
+      font: 700 36px "Now", sans-serif;
       line-height: 42px;
       margin-top: 16px;
     }
@@ -28,44 +30,90 @@
       color: #f8f8f8;
     }
   }
+}
+main {
+  
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  // background-color: #FFFFFF;
 
-  main {
-    flex: 8;
+  img {
+    height: 40%;
+    width: 60%;
+    margin-top: 2%;
+  }
 
-    padding: 0 32;
 
+  div{
+    width: 60%;
+    height: 40%;
+    border-radius: 8px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    // background-color: #edf2f4;
 
-    .main-content {
+    h1{
+      font-family: 'Now';
+      font-weight: bold;
+      color: #3A81C3;
+    }
+
+
+    form {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      max-width: 320px;
-      align-items: stretch;
-      text-align: center;
-
-      > img {
-        align-items: center;
+      height: 80%;
+      
+      input {
+        height: 15%;
+        width: 75%;
+        border-radius: 8px;
+        border: none;
+        // padding: 0 25px;
+        background: #83b2df;
+        margin-top: 5%;
+        font-size: 1.1em;
+        // text-decoration: none;
       }
-
-      strong {
-        font: 600 36px "Poppins", sans-serif;
-        margin-top: 50px;
+      input:focus{
+        filter: brightness(0.9);
+        border: none;
+        outline: none;
+        transition: filter 0.2s;
       }
-
-      form {
-        input {
-          height: 50px;
-          width: 250px;
-          border-radius: 8px;
-          padding: 0 25px;
-          background: #494949;
-          opacity: 0.5;
-          border: 1px solid #a8a8b3;
-          margin-top: 19px;
-        }
+      
+      input::placeholder{
+        font-size: 1em;
+        font-family: "Now";
+        color: rgba(255, 255, 255, 0.671);
+        text-align: center;
       }
     }
   }
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+  align-items: stretch;
+  text-align: center;
+  border: 1px solid black;
+
+
+
+  strong {
+    font: 600 36px "Now", sans-serif;
+    margin-top: 50px;
+  }
+
+  
 }

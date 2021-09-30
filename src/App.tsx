@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { Login } from './pages/Login';
 import { Home } from './pages/Home';
 import { CadastroMunicipio } from './pages/RegisterCity';
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <Route path="/register-city" exact component={CadastroMunicipio} />
       <Route path="/all-tickets" exact component={AllTickets} />
       <GlobalStyle />
+      <ToastContainer />
     </BrowserRouter>
   );
 };
