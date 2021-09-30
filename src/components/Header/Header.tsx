@@ -4,7 +4,7 @@ import React from 'react';
 
 import { LogoutButton } from '../LogoutButton/LogoutButton';
 
-import logoTcespHome from '../../assets/images/new_logo_tcesp.svg';
+import logoTcespHome from '../../assets/images/logo_audit_retangular.png';
 import './header.scss';
 
 const Header: React.FC = () => {
