@@ -12,7 +12,7 @@ import { Container } from './Home/Home.styled';
 export function CadastroMunicipio() {
   return (
     <Container>
-      <SideMenu />
+      <SideMenu page="register" />
       <div className="content">
         <Header />
         <div className="cadastro-municipio">

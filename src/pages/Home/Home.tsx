@@ -14,7 +14,7 @@ import TopProblem from '../../components/TopProblems/TopProblems';
 const Home: React.FC = () => {
   return (
     <Container>
-      <SideMenu>
+      <SideMenu page="home">
         <h1>Home</h1>
       </SideMenu>
       <Content>

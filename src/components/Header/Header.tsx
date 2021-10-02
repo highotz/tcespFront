@@ -10,7 +10,9 @@ import './header.scss';
 const Header: React.FC = () => {
   return (
     <header>
-      <img src={logoTcespHome} alt="logo TCESP" />
+      <div>
+        <img src={logoTcespHome} width="400px" alt="logo_image" srcSet="" />
+      </div>
 
       <LogoutButton>Sair</LogoutButton>
     </header>

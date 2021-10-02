@@ -2,15 +2,18 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiChevronsLeft } from 'react-icons/fi';
+import {
+  FiChevronsLeft,
+  FiHome,
+  FiList,
+  FiMap,
+  FiPhoneCall,
+} from 'react-icons/fi';
 
-import { SideBar } from '../../pages/Home/Home.styled';
-import './link.scss';
+import { SideBar, NavigationLinks } from './SideBar.styled';
 
-const SideMenu: React.FC = () => {
+const SideMenu: React.FC<{ page: string }> = ({ page }) => {
   const [isOpen, setOpen] = useState(true);
-
   return (
     <SideBar id="side-menu" open={isOpen}>
       <button type="button" onClick={() => setOpen(!isOpen)}>
@@ -24,26 +27,40 @@ const SideMenu: React.FC = () => {
       </button>
       <div style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
         <ul>
-          Menu:
           <li>
-            <Link className="link" to="/home">
+            <NavigationLinks currentPage={page === 'home'} to="/home">
+              <i>
+                <FiHome />
+              </i>
               Home
-            </Link>
+            </NavigationLinks>
           </li>
           <li>
-            <Link className="link" to="/register-city">
+            <NavigationLinks
+              currentPage={page === 'register'}
+              to="/register-city"
+            >
+              <i>
+                <FiMap />
+              </i>
               Cadastro Municipio
-            </Link>
+            </NavigationLinks>
           </li>
           <li>
-            <Link className="link" to="/all-tickets">
+            <NavigationLinks currentPage={page === 'tickets'} to="/all-tickets">
+              <i>
+                <FiList />
+              </i>
               Todos os Chamados
-            </Link>
+            </NavigationLinks>
           </li>
           <li>
-            <Link className="link" to="/faq">
+            <NavigationLinks currentPage={page === 'faq'} to="/faq">
+              <i>
+                <FiPhoneCall />
+              </i>
               Fale Conosco
-            </Link>
+            </NavigationLinks>
           </li>
         </ul>
       </div>

@@ -15,7 +15,7 @@ import '../styles/form.scss';
 const AllTickets: React.FC = () => {
   return (
     <Container>
-      <SideMenu />
+      <SideMenu page="tickets" />
       <div className="content">
         <Header />
         <div className="cadastro-municipio">
