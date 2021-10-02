@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100vw;
@@ -70,22 +69,6 @@ export const TopProblems = styled.section`
     border-radius: 12px;
     display: flex;
     justify-content: center;
-    align-items: center;
-  }
-`;
-
-export const Footer = styled.footer`
-  width: 95%;
-  height: 4%;
-  display: flex;
-  margin-left: 20px;
-  justify-content: space-between;
-  align-items: center;
-  /* border: solid 1px; */
-
-  div {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
   }
 `;
