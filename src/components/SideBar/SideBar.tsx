@@ -14,8 +14,8 @@ import { SideBar, NavigationLinks, LogoDiv } from './SideBar.styled';
 import SideBarContext from '../../contexts/sideBar';
 import logoTcespHome from '../../assets/images/logo_audit_retangular_clean.png';
 
-const SideMenu: React.FC<{ page: string }> = ({ page }) => {
-  const { opened, opening } = useContext(SideBarContext);
+const SideMenu: React.FC = () => {
+  const { opened, opening, getPage, page } = useContext(SideBarContext);
   return (
     <SideBar id="side-menu" open={opened}>
       <button type="button" onClick={() => opening()}>
@@ -37,7 +37,11 @@ const SideMenu: React.FC<{ page: string }> = ({ page }) => {
       <div style={{ visibility: opened ? 'visible' : 'hidden' }}>
         <ul>
           <li>
-            <NavigationLinks currentPage={page === 'home'} to="/home">
+            <NavigationLinks
+              currentPage={page === 'home'}
+              to="/"
+              onClick={() => getPage('home')}
+            >
               <i>
                 <FiHome />
               </i>
@@ -48,6 +52,7 @@ const SideMenu: React.FC<{ page: string }> = ({ page }) => {
             <NavigationLinks
               currentPage={page === 'register'}
               to="/register-city"
+              onClick={() => getPage('register')}
             >
               <i>
                 <FiMap />
@@ -56,7 +61,11 @@ const SideMenu: React.FC<{ page: string }> = ({ page }) => {
             </NavigationLinks>
           </li>
           <li>
-            <NavigationLinks currentPage={page === 'tickets'} to="/all-tickets">
+            <NavigationLinks
+              currentPage={page === 'tickets'}
+              to="/all-tickets"
+              onClick={() => getPage('tickets')}
+            >
               <i>
                 <FiList />
               </i>
@@ -64,7 +73,11 @@ const SideMenu: React.FC<{ page: string }> = ({ page }) => {
             </NavigationLinks>
           </li>
           <li>
-            <NavigationLinks currentPage={page === 'faq'} to="/faq">
+            <NavigationLinks
+              currentPage={page === 'faq'}
+              to="/faq"
+              onClick={() => getPage('faq')}
+            >
               <i>
                 <FiPhoneCall />
               </i>

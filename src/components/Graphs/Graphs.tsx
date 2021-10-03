@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Chart } from 'chart.js';
+
 import { Graphs } from './Graph.styled';
 
 const Graph: React.FC = () => {
@@ -32,9 +33,35 @@ const Graph: React.FC = () => {
     scales: {
       x: {
         stacked: true,
+        grid: {
+          drawTicks: false,
+          drawOnChartArea: false,
+        },
+        ticks: {
+          display: false,
+        },
       },
       y: {
         stacked: true,
+        grid: {
+          drawOnChartArea: false,
+        },
+        ticks: {
+          font: {
+            family: 'Now',
+          },
+        },
+      },
+      // drawTicks: false,
+    },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          font: {
+            family: 'Now',
+          },
+        },
       },
     },
   };
@@ -44,44 +71,7 @@ const Graph: React.FC = () => {
         <Bar
           id="1"
           data={state}
-          options={{
-            indexAxis: 'y',
-            responsive: true,
-            scales: {
-              x: {
-                stacked: true,
-                grid: {
-                  drawTicks: false,
-                  drawOnChartArea: false,
-                },
-                ticks: {
-                  display: false,
-                },
-              },
-              y: {
-                stacked: true,
-                grid: {
-                  drawOnChartArea: false,
-                },
-                ticks: {
-                  font: {
-                    family: 'Now',
-                  },
-                },
-              },
-              // drawTicks: false,
-            },
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: {
-                  font: {
-                    family: 'Now',
-                  },
-                },
-              },
-            },
-          }}
+          options={options}
           style={{
             width: '80%',
             height: '80%',
