@@ -2,23 +2,25 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Button } from '../components/Button/Button';
-import api from '../api';
-import logoTcesp from '../assets/images/logo_audit_redondo.png';
-import '../styles/login.scss';
+import { Button } from '../../components/Button/Button';
+import api from '../../api';
+import logoTcesp from '../../assets/images/logo_audit_redondo.png';
+import AuthContext from '../../contexts/authContext';
+import './login.scss';
 
-export function Login() {
+export default function Login() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const history = useHistory();
-
+  const { signIn } = useContext(AuthContext);
+  // console.log(signed, user);
   async function handleDirectToHome() {
     history.push('/home');
   }
-  const signIn = async (email: string, password: string) => {
+  const handleSign = async (email: string, password: string) => {
     if (!email || !password) {
       toast.error('Preencha o seu email e senha!!', {
         position: 'top-center',
@@ -30,7 +32,8 @@ export function Login() {
         progress: undefined,
       });
     } else if (email === 'admin' && password === 'admin') {
-      handleDirectToHome();
+      const token = '12312412';
+      signIn(email, token);
     } else {
       toast.warn('Email ou senha invalido....', {
         position: 'top-center',
@@ -86,7 +89,7 @@ export function Login() {
               type="password"
               placeholder="Digite sua senha"
             />
-            <Button onClick={() => signIn(email, password)} type="button">
+            <Button onClick={() => handleSign(email, password)} type="button">
               Entrar
             </Button>
           </form>

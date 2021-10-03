@@ -1,19 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Login } from './pages/Login';
-import { Home } from './pages/Home';
-import { CadastroMunicipio } from './pages/RegisterCity';
-import AllTickets from './pages/Alltickets';
 import GlobalStyle from './styles/global';
+import { AuthProvider } from './contexts/authContext';
+import Routes from './routes';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Route path="/" exact component={Login} />
-      <Route path="/home" exact component={Home} />
-      <Route path="/register-city" exact component={CadastroMunicipio} />
-      <Route path="/all-tickets" exact component={AllTickets} />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
       <GlobalStyle />
       <ToastContainer />
     </BrowserRouter>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
-import { Footer } from '../../pages/Home/Home.styled';
+import { Footer } from './Footer.styled';
 
 const TinyLines: React.FC = () => {
   return (

@@ -1,49 +1,88 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiChevronsLeft } from 'react-icons/fi';
+import React, { useContext } from 'react';
+import {
+  FiChevronsLeft,
+  FiHome,
+  FiList,
+  FiMap,
+  FiPhoneCall,
+} from 'react-icons/fi';
 
-import { SideBar } from '../../pages/Home/Home.styled';
-import './link.scss';
+import { SideBar, NavigationLinks, LogoDiv } from './SideBar.styled';
+import SideBarContext from '../../contexts/sideBar';
+import logoTcespHome from '../../assets/images/logo_audit_retangular_clean.png';
 
 const SideMenu: React.FC = () => {
-  const [isOpen, setOpen] = useState(true);
-
+  const { opened, opening, getPage, page } = useContext(SideBarContext);
   return (
-    <SideBar id="side-menu" open={isOpen}>
-      <button type="button" onClick={() => setOpen(!isOpen)}>
+    <SideBar id="side-menu" open={opened}>
+      <button type="button" onClick={() => opening()}>
         <FiChevronsLeft
           style={{
-            transform: isOpen ? 'rotateY(0)' : 'rotateY(180deg) ',
+            transform: opened ? 'rotateY(0)' : 'rotateY(180deg) ',
             animation: 'transform 0.3s ease-in-out',
           }}
           size={30}
         />
       </button>
-      <div style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
+
+      {opened ? (
+        <LogoDiv>
+          <img src={logoTcespHome} alt="logo_image" />
+        </LogoDiv>
+      ) : null}
+
+      <div style={{ visibility: opened ? 'visible' : 'hidden' }}>
         <ul>
-          Menu:
           <li>
-            <Link className="link" to="/home">
+            <NavigationLinks
+              currentPage={page === 'home'}
+              to="/"
+              onClick={() => getPage('home')}
+            >
+              <i>
+                <FiHome />
+              </i>
               Home
-            </Link>
+            </NavigationLinks>
           </li>
           <li>
-            <Link className="link" to="/register-city">
+            <NavigationLinks
+              currentPage={page === 'register'}
+              to="/register-city"
+              onClick={() => getPage('register')}
+            >
+              <i>
+                <FiMap />
+              </i>
               Cadastro Municipio
-            </Link>
+            </NavigationLinks>
           </li>
           <li>
-            <Link className="link" to="/all-tickets">
+            <NavigationLinks
+              currentPage={page === 'tickets'}
+              to="/all-tickets"
+              onClick={() => getPage('tickets')}
+            >
+              <i>
+                <FiList />
+              </i>
               Todos os Chamados
-            </Link>
+            </NavigationLinks>
           </li>
           <li>
-            <Link className="link" to="/faq">
+            <NavigationLinks
+              currentPage={page === 'faq'}
+              to="/faq"
+              onClick={() => getPage('faq')}
+            >
+              <i>
+                <FiPhoneCall />
+              </i>
               Fale Conosco
-            </Link>
+            </NavigationLinks>
           </li>
         </ul>
       </div>

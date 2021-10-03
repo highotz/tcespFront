@@ -3,29 +3,18 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 
-import { Container, Content, Resume } from './Home.styled';
-
-import TinyLines from '../../components/Footer/Footer';
-import SideMenu from '../../components/SideBar/SideBar';
-import Header from '../../components/Header/Header';
-import Graphs from '../../components/Graphs/Graphs';
+import { Resume } from './Home.styled';
+import Graph from '../../components/Graphs/Graphs';
 import TopProblem from '../../components/TopProblems/TopProblems';
 
 const Home: React.FC = () => {
   return (
-    <Container>
-      <SideMenu>
-        <h1>Home</h1>
-      </SideMenu>
-      <Content>
-        <Header />
-        <Resume>
-          <Graphs />
-          <TopProblem />
-        </Resume>
-        <TinyLines />
-      </Content>
-    </Container>
+    <>
+      <Resume>
+        <Graph />
+        <TopProblem />
+      </Resume>
+    </>
   );
 };
 
