@@ -39,11 +39,14 @@ export const SideBar = styled.div<Props>`
       opacity: 0.6;
     }
   }
-
   div {
-    margin-top: 20%;
+    margin-top: 30%;
     display: flex;
     flex-direction: column;
+
+    :nth-child(3) {
+      margin-top: 6%;
+    }
 
     li {
       list-style-type: none;
@@ -66,5 +69,17 @@ export const NavigationLinks = styled(Link)`
 
   :hover {
     opacity: 0.7;
+  }
+`;
+
+export const LogoDiv = styled.div`
+  width: 90%;
+  margin-top: 20px;
+  margin-left: 5%;
+  height: 10%;
+
+  img {
+    width: 100%;
+    height: 100%;
   }
 `;

@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
   FiChevronsLeft,
   FiHome,
@@ -10,22 +10,31 @@ import {
   FiPhoneCall,
 } from 'react-icons/fi';
 
-import { SideBar, NavigationLinks } from './SideBar.styled';
+import { SideBar, NavigationLinks, LogoDiv } from './SideBar.styled';
+import SideBarContext from '../../contexts/sideBar';
+import logoTcespHome from '../../assets/images/logo_audit_retangular_clean.png';
 
 const SideMenu: React.FC<{ page: string }> = ({ page }) => {
-  const [isOpen, setOpen] = useState(true);
+  const { opened, opening } = useContext(SideBarContext);
   return (
-    <SideBar id="side-menu" open={isOpen}>
-      <button type="button" onClick={() => setOpen(!isOpen)}>
+    <SideBar id="side-menu" open={opened}>
+      <button type="button" onClick={() => opening()}>
         <FiChevronsLeft
           style={{
-            transform: isOpen ? 'rotateY(0)' : 'rotateY(180deg) ',
+            transform: opened ? 'rotateY(0)' : 'rotateY(180deg) ',
             animation: 'transform 0.3s ease-in-out',
           }}
           size={30}
         />
       </button>
-      <div style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
+
+      {opened ? (
+        <LogoDiv>
+          <img src={logoTcespHome} alt="logo_image" />
+        </LogoDiv>
+      ) : null}
+
+      <div style={{ visibility: opened ? 'visible' : 'hidden' }}>
         <ul>
           <li>
             <NavigationLinks currentPage={page === 'home'} to="/home">

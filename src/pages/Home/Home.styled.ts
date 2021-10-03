@@ -10,10 +10,6 @@ export const Container = styled.div`
   }
 `;
 
-interface Props {
-  open: boolean;
-}
-
 export const Content = styled.div`
   width: 100%;
   height: 100%;
@@ -36,23 +32,6 @@ export const Resume = styled.section`
   height: 90%;
   display: flex;
   flex-direction: column;
-`;
-
-export const Graphs = styled.section`
-  width: 96%;
-  height: 45%;
-  display: flex;
-  margin: 2%;
-  justify-content: space-between;
-
-  div {
-    background: #8d99ae;
-    width: 45%;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 
 export const TopProblems = styled.section`

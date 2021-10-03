@@ -1,5 +1,7 @@
-header {
-  background: #3A81C3;
+import styled from 'styled-components';
+
+export const Container = styled.header`
+  background: #3a81c3;
   // border: solid 1px;
   border-left: solid 1px white;
   max-height: 100px;
@@ -15,14 +17,11 @@ header {
     width: 22%;
     display: flex;
     align-items: center;
-    
-    img{
-      margin-top: 12%;
-      margin-right: 0;
-      // border: solid;
-      image-rendering: auto;
-      border-radius: 2px;
-      
-    }
+    margin-left: 2%;
   }
-}
+`;
+
+export const Logo = styled.img`
+  width: 70%;
+  height: 80%;
+`;
