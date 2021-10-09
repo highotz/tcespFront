@@ -63,7 +63,7 @@ export const NavigationLinks = styled(Link)`
   font-family: 'Now';
   display: flex;
   align-items: center;
-  i {
+  span {
     margin-right: 5%;
   }
 
@@ -81,5 +81,41 @@ export const LogoDiv = styled.div`
   img {
     width: 100%;
     height: 100%;
+  }
+`;
+export const DropDown = styled.div`
+  display: flex;
+  /* width: 95%;
+  height: 52%; */
+  margin-top: 20px !important;
+
+  :hover {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2px !important;
+    }
+  }
+  div {
+    width: 90%;
+    display: none;
+    z-index: 1;
+    transition: all 0.3s ease-in;
+  }
+  i {
+    margin: 0;
+    border: none;
+    font-style: normal;
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: white;
+    font-weight: 300;
+    cursor: pointer;
+    font-family: 'Now';
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    padding: 0;
   }
 `;

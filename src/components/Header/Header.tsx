@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 import SideBarContext from '../../contexts/sideBar';
 import AuthContext from '../../contexts/authContext';
 import { LogoutButton } from '../LogoutButton/LogoutButton';
@@ -8,10 +9,14 @@ import { LogoutButton } from '../LogoutButton/LogoutButton';
 import logoTcespHome from '../../assets/images/logo_audit_retangular_clean.png';
 import { Container, Logo } from './Header.Styled';
 
-const Header: React.FC = () => {
+const Header: React.FC<{ history: any }> = ({ history }) => {
   const { opened } = useContext(SideBarContext);
   const { signOut } = useContext(AuthContext);
 
+  const handleSigOut = () => {
+    history.push('/');
+    signOut();
+  };
   return (
     <Container>
       {!opened ? (
@@ -21,7 +26,7 @@ const Header: React.FC = () => {
       ) : (
         <div />
       )}
-      <LogoutButton onClick={signOut}>Sair</LogoutButton>
+      <LogoutButton onClick={handleSigOut}>Sair</LogoutButton>
     </Container>
   );
 };
