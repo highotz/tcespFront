@@ -12,7 +12,7 @@ const SideBarContext = createContext<SideBarContextData>(
 );
 
 export const SideBarProvider: React.FC = ({ children }) => {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(true);
   const [page, setPage] = useState('Home');
   function getPage(pageDestination: string) {
     setPage(pageDestination);

@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router';
 import SideBarContext from '../../contexts/sideBar';
 import AuthContext from '../../contexts/authContext';
 import { LogoutButton } from '../LogoutButton/LogoutButton';

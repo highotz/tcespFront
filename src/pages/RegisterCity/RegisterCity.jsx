@@ -2,13 +2,15 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { Modal } from 'antd';
 import MaterialTable from 'material-table';
 import 'antd/dist/antd.css';
-
 import { toast } from 'react-toastify';
+import api from '../../api';
+import translateTable from '../../utils/tableTranslate';
+
 import {
   Content,
   Breadcrumb,
@@ -22,18 +24,75 @@ const RegisterCity = () => {
   const [municipio, setMunicipio] = useState('');
   const [url, setUrl] = useState('');
   const [idMunicipio, setIdMunicipio] = useState('');
+  const [tableData, setTableData] = useState([]);
   const showModal = () => {
     setIsModalVisible(true);
   };
+
+  const handleData = async () => {
+    const response = await api.get('/citys');
+    if (response.status === 200) {
+      setTableData(response.data);
+    }
+  };
+
+  useEffect(() => {
+    handleData();
+  }, [isModalVisible]);
 
   const handleOk = () => {
     setIsModalVisible(false);
   };
 
-  const handleEdit = (rowData) => {
+  const handleEdit = async (rowData) => {
+    const response = await api.get(`/citys/${rowData.id}`);
+    const idCity = response.data.id;
+    const nameCity = response.data.name;
+    const urlCity = response.data.url;
     setIsModalVisible(false);
-    setIdMunicipio(rowData.idMunicipio);
-    setMunicipio(rowData.municipio);
+    setIdMunicipio(idCity);
+    setMunicipio(nameCity);
+    setUrl(urlCity);
+  };
+  const clearForm = () => {
+    setUrl('');
+    setIdMunicipio('');
+    setMunicipio('');
+  };
+  const updateCity = async () => {
+    const response = await api.put(`/citys/${idMunicipio}`, {
+      name: municipio,
+      url,
+    });
+    const { name } = response.data;
+    toast.success(`Dados do município ${name} atualizados`, {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    clearForm();
+  };
+
+  const createCity = async () => {
+    const response = await api.post(`/citys`, {
+      name: municipio,
+      url,
+    });
+    const { name } = response.data;
+    toast.success(`Município ${name} criado com sucesso`, {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    clearForm();
   };
 
   const handleSubmit = () => {
@@ -47,6 +106,10 @@ const RegisterCity = () => {
         draggable: true,
         progress: undefined,
       });
+    } else if (idMunicipio && municipio) {
+      updateCity();
+    } else {
+      createCity();
     }
   };
   return (
@@ -74,19 +137,10 @@ const RegisterCity = () => {
           <MaterialTable
             title="Municípios cadastrados"
             columns={[
-              { title: 'id', field: 'idMunicipio', hidden: true },
-              { title: 'Município', field: 'municipio' },
+              { title: 'id', field: 'id', hidden: true },
+              { title: 'Município', field: 'name' },
             ]}
-            data={[
-              {
-                municipio: 'São Bernardo do Campo',
-                idMunicipio: '1',
-              },
-              {
-                municipio: 'São José dos Campos',
-                idMunicipio: '2',
-              },
-            ]}
+            data={tableData}
             actions={[
               {
                 icon: 'edit',
@@ -97,26 +151,7 @@ const RegisterCity = () => {
             options={{
               actionsColumnIndex: -1,
             }}
-            localization={{
-              body: {
-                emptyDataSourceMessage: 'Nenhum registro para exibir',
-              },
-              header: {
-                actions: 'Ações',
-              },
-              toolbar: {
-                searchTooltip: 'Pesquisar',
-                searchPlaceholder: 'Pesquisar',
-              },
-              pagination: {
-                labelRowsSelect: 'linhas',
-                labelDisplayedRows: '{count} de {from}-{to}',
-                firstTooltip: 'Primeira página',
-                previousTooltip: 'Página anterior',
-                nextTooltip: 'Próxima página',
-                lastTooltip: 'Última página',
-              },
-            }}
+            localization={translateTable}
           />
         </Modal>
       </Find>

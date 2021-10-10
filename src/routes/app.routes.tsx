@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { Home } from '../pages/Home';
 import { RegisterCity } from '../pages/RegisterCity';
+import { RegisterUsers } from '../pages/RegisterUsers';
 import { AllTickets } from '../pages/AllTickets';
 import { SideBarProvider } from '../contexts/sideBar';
 import TinyLines from '../components/Footer/Footer';
@@ -24,6 +25,7 @@ const AppRoutes: React.FC = () => {
             <Header history={history} />
             <Route path="/" exact component={Home} />
             <Route path="/register-city" component={RegisterCity} />
+            <Route path="/register-user" component={RegisterUsers} />
             <Route path="/all-tickets" component={AllTickets} />
             <TinyLines />
           </Content>
