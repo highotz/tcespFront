@@ -3,14 +3,20 @@ import React, { createContext, useState, useEffect } from 'react';
 interface UserData {
   userLogin: string;
   userToken: string;
+  flagAdmin: boolean;
 }
 
 interface AuthContextData {
   signed: boolean;
   user: UserData | null;
-  signIn(userLogin: string, userToken: string): Promise<void>;
+  signIn(
+    userLogin: string,
+    userToken: string,
+    flagAdmin: boolean,
+  ): Promise<void>;
   signOut(): void;
   loading: boolean;
+  admin: boolean;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -18,6 +24,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<UserData | null>(null);
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     function loadStorageData() {
@@ -32,8 +39,13 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadStorageData();
   });
 
-  async function signIn(userLogin: string, userToken: string) {
-    const response: UserData = { userLogin, userToken };
+  async function signIn(
+    userLogin: string,
+    userToken: string,
+    flagAdmin: boolean,
+  ) {
+    setAdmin(flagAdmin);
+    const response: UserData = { userLogin, userToken, flagAdmin };
     setUser(response);
     localStorage.setItem('user', JSON.stringify(response.userLogin));
     localStorage.setItem('token', JSON.stringify(response.userToken));
@@ -46,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, signIn, signOut, loading }}
+      value={{ signed: !!user, user, signIn, signOut, loading, admin }}
     >
       {children}
     </AuthContext.Provider>
