@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import api from '../api';
 
 interface UserData {
   userLogin: string;
@@ -46,6 +47,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   ) {
     setAdmin(flagAdmin);
     const response: UserData = { userLogin, userToken, flagAdmin };
+
+    api.defaults.headers.common.authorization = `Bearer ${userToken}`;
+
     setUser(response);
     localStorage.setItem('user', JSON.stringify(response.userLogin));
     localStorage.setItem('token', JSON.stringify(response.userToken));

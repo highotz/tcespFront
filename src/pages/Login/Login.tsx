@@ -30,8 +30,10 @@ export default function Login() {
     try {
       const response = await api.post('/sessions', { email, password });
       if (response.status === 200) {
-        const { email, isAdmin, token } = response.data;
-        signIn(email, token, isAdmin);
+        const { token } = response.data;
+        const { email, admin } = response.data.user;
+
+        signIn(email, token, admin);
       }
     } catch (error) {
       toast.warning('Email ou senha incorretos', {

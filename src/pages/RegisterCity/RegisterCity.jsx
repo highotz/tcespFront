@@ -31,6 +31,7 @@ const RegisterCity = () => {
 
   const handleData = async () => {
     const response = await api.get('/citys');
+
     if (response.status === 200) {
       setTableData(response.data);
     }
@@ -45,7 +46,7 @@ const RegisterCity = () => {
   };
 
   const handleEdit = async (rowData) => {
-    const response = await api.get(`/citys/${rowData.id}`);
+    const response = await api.patch(`/citys/update-url/${rowData.id}`);
     const idCity = response.data.id;
     const nameCity = response.data.name;
     const urlCity = response.data.url;
