@@ -28,13 +28,7 @@ export default function Login() {
       });
     }
     try {
-      const response = await api.post('/sessions', { email, password });
-      if (response.status === 200) {
-        const { token } = response.data;
-        const { email, admin } = response.data.user;
-
-        signIn(email, token, admin);
-      }
+      signIn(email, password);
     } catch (error) {
       toast.warning('Email ou senha incorretos', {
         position: 'top-center',

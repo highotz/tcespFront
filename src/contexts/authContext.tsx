@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import api from '../api';
 
 interface UserData {
@@ -10,11 +10,7 @@ interface UserData {
 interface AuthContextData {
   signed: boolean;
   user: UserData | null;
-  signIn(
-    userLogin: string,
-    userToken: string,
-    flagAdmin: boolean,
-  ): Promise<void>;
+  signIn(emailInput: string, passwordInput: string): Promise<void>;
   signOut(): void;
   loading: boolean;
   admin: boolean;
@@ -25,36 +21,45 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<UserData | null>(null);
-  const [admin, setAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     function loadStorageData() {
       const storageUser = localStorage.getItem('user');
       const storageToken = localStorage.getItem('token');
+      const storageAdmin = localStorage.getItem('admin') !== '';
 
       if (storageToken && storageUser) {
         setUser(JSON.parse(storageUser));
         setLoading(false);
+        setIsAdmin(storageAdmin);
       }
     }
     loadStorageData();
   });
 
-  async function signIn(
-    userLogin: string,
-    userToken: string,
-    flagAdmin: boolean,
-  ) {
-    setAdmin(flagAdmin);
-    const response: UserData = { userLogin, userToken, flagAdmin };
+  async function signIn(emailInput: string, passwordInput: string) {
+    const data = {
+      email: emailInput,
+      password: passwordInput,
+    };
+    const response = await api.post('/sessions', data);
+    if (response.status === 200) {
+      const { token } = response.data;
+      const { email, admin } = response.data.user;
 
-    api.defaults.headers.common.authorization = `Bearer ${userToken}`;
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
 
-    setUser(response);
-    localStorage.setItem('user', JSON.stringify(response.userLogin));
-    localStorage.setItem('token', JSON.stringify(response.userToken));
+      setUser({ userLogin: email, userToken: token, flagAdmin: admin });
+      localStorage.setItem('user', JSON.stringify(email));
+      localStorage.setItem('token', JSON.stringify(token));
+      if (admin) {
+        localStorage.setItem('admin', JSON.stringify(admin));
+      } else {
+        localStorage.setItem('admin', JSON.stringify(''));
+      }
+    }
   }
-
   function signOut() {
     setUser(null);
     localStorage.clear();
@@ -62,7 +67,14 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, signIn, signOut, loading, admin }}
+      value={{
+        signed: !!user,
+        user,
+        signIn,
+        signOut,
+        loading,
+        admin: !!isAdmin,
+      }}
     >
       {children}
     </AuthContext.Provider>
