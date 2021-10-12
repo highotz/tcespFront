@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { Modal } from 'antd';
 import MaterialTable from 'material-table';
@@ -16,6 +16,7 @@ import {
   Find,
   Button,
 } from './RegisterUsers.Styled';
+import api from '../../api';
 
 const RegisterUsers = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -23,10 +24,21 @@ const RegisterUsers = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [idUser, setIdUser] = useState('');
+  const [tableData, setTableData] = useState([]);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
+  const handleData = async () => {
+    const response = await api.get('/useres');
+    if (response.status === 200) {
+      setTableData(response.data);
+    }
+  };
 
+  useEffect(() => {
+    handleData();
+  }, [isModalVisible]);
   const handleOk = () => {
     setIsModalVisible(false);
   };
