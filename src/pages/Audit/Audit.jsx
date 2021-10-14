@@ -46,13 +46,19 @@ const Audit = () => {
               value={element.name || ''}
               onChange={(e) => handleChange(index, e)}
             />
+            <select>
+              <option value="funcionando">funcionando</option>
+              <option value="nao funcionando">nao funcionando</option>
+            </select>
+
             <input
               type="text"
-              name="email"
-              placeholder="Descrição"
-              value={element.email || ''}
+              name="comentarios"
+              placeholder="Comentarios"
+              value={element.name || ''}
               onChange={(e) => handleChange(index, e)}
             />
+
             {index === formValues.length - 1 ? (
               <AddButton type="button" onClick={() => addFormFields()}>
                 <GrFormAdd />

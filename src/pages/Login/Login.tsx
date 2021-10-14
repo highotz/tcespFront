@@ -6,6 +6,7 @@ import React, { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import api from '../../api';
 import logoTcesp from '../../assets/images/logo_audit_redondo.png';
+import { Button } from '../../components/Button/Button';
 import AuthContext from '../../contexts/authContext';
 import './login.scss';
 
@@ -58,9 +59,9 @@ export default function Login() {
               type="password"
               placeholder="Digite sua senha"
             />
-            <button onClick={() => handleSign(email, password)} type="button">
+            <Button onClick={() => handleSign(email, password)} type="button">
               Entrar
-            </button>
+            </Button>
           </form>
         </div>
       </main>
