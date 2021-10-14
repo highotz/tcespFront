@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { toast } from 'react-toastify';
 import api from '../api';
 
 interface UserData {
@@ -27,7 +28,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     function loadStorageData() {
       const storageUser = localStorage.getItem('user');
       const storageToken = localStorage.getItem('token');
-      const storageAdmin = localStorage.getItem('admin') !== '';
+      const storageAdmin = localStorage.getItem('admin') !== '"false"';
 
       if (storageToken && storageUser) {
         setUser(JSON.parse(storageUser));
@@ -43,21 +44,31 @@ export const AuthProvider: React.FC = ({ children }) => {
       email: emailInput,
       password: passwordInput,
     };
-    const response = await api.post('/sessions', data);
-    if (response.status === 200) {
-      const { token } = response.data;
-      const { email, admin } = response.data.user;
-
-      api.defaults.headers.common.authorization = `Bearer ${token}`;
-
-      setUser({ userLogin: email, userToken: token, flagAdmin: admin });
-      localStorage.setItem('user', JSON.stringify(email));
-      localStorage.setItem('token', JSON.stringify(token));
-      if (admin) {
-        localStorage.setItem('admin', JSON.stringify(admin));
-      } else {
-        localStorage.setItem('admin', JSON.stringify(''));
+    try {
+      const response = await api.post('/sessions', data);
+      if (response.status === 200) {
+        const { token } = response.data;
+        const { email, admin } = response.data.user;
+        api.defaults.headers.common.authorization = `Bearer ${token}`;
+        setUser({ userLogin: email, userToken: token, flagAdmin: admin });
+        localStorage.setItem('user', JSON.stringify(email));
+        localStorage.setItem('token', JSON.stringify(token));
+        if (admin) {
+          localStorage.setItem('admin', JSON.stringify(admin));
+        } else {
+          localStorage.setItem('admin', JSON.stringify('false'));
+        }
       }
+    } catch (error) {
+      toast.warning('Email ou senha incorretos', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }
   function signOut() {
