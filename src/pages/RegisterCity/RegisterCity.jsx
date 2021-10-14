@@ -46,10 +46,10 @@ const RegisterCity = () => {
   };
 
   const handleEdit = async (rowData) => {
-    const response = await api.patch(`/citys/update-url/${rowData.id}`);
+    const response = await api.get(`/citys/${rowData.id}`);
     const idCity = response.data.id;
     const nameCity = response.data.name;
-    const urlCity = response.data.url;
+    const urlCity = response.data.site;
     setIsModalVisible(false);
     setIdMunicipio(idCity);
     setMunicipio(nameCity);

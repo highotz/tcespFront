@@ -4,7 +4,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Button } from '../../components/Button/Button';
 import api from '../../api';
 import logoTcesp from '../../assets/images/logo_audit_redondo.png';
 import AuthContext from '../../contexts/authContext';
@@ -26,19 +25,8 @@ export default function Login() {
         draggable: true,
         progress: undefined,
       });
-    }
-    try {
+    } else {
       signIn(email, password);
-    } catch (error) {
-      toast.warning('Email ou senha incorretos', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
     }
   };
 
@@ -70,9 +58,9 @@ export default function Login() {
               type="password"
               placeholder="Digite sua senha"
             />
-            <Button onClick={() => handleSign(email, password)} type="button">
+            <button onClick={() => handleSign(email, password)} type="button">
               Entrar
-            </Button>
+            </button>
           </form>
         </div>
       </main>

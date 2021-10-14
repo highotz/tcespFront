@@ -2,7 +2,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useContext } from 'react';
-import { FiChevronsLeft, FiHome, FiList, FiMap, FiUser } from 'react-icons/fi';
+import {
+  FiChevronsLeft,
+  FiHome,
+  FiList,
+  FiMap,
+  FiSearch,
+  FiUser,
+} from 'react-icons/fi';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import { SideBar, NavigationLinks, LogoDiv, DropDown } from './SideBar.styled';
@@ -43,6 +50,19 @@ const SideMenu: React.FC = () => {
                 <FiHome />
               </span>
               Home
+            </NavigationLinks>
+          </li>
+
+          <li>
+            <NavigationLinks
+              currentPage={page === 'audit'}
+              to="/audit"
+              onClick={() => getPage('audit')}
+            >
+              <span>
+                <FiSearch />
+              </span>
+              Auditar
             </NavigationLinks>
           </li>
           {admin ? (

@@ -11,6 +11,7 @@ import SideMenu from '../components/SideBar/SideBar';
 import Header from '../components/Header/Header';
 
 import { Container, Content } from './App.Routes.styles';
+import { Audit } from '../pages/Audit';
 
 const AppRoutes: React.FC = () => {
   const history = useHistory();
@@ -24,6 +25,7 @@ const AppRoutes: React.FC = () => {
           <Content>
             <Header history={history} />
             <Route path="/" exact component={Home} />
+            <Route path="/audit" component={Audit} />
             <Route path="/register-city" component={RegisterCity} />
             <Route path="/register-user" component={RegisterUsers} />
             <Route path="/all-tickets" component={AllTickets} />
