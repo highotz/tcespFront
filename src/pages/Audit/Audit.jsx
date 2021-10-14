@@ -3,14 +3,19 @@
 import React, { useState } from 'react';
 
 import { GrFormAdd, GrFormSubtract } from 'react-icons/gr';
+import { Select } from 'antd';
 import { Container, Form, RemoveButton, AddButton } from './Audit.Styled';
 
+const { Option } = Select;
+
 const Audit = () => {
-  const currentUser = localStorage.getItem('user');
-  console.log(currentUser);
   const [formValues, setFormValues] = useState([
     { title: '', description: '' },
   ]);
+
+  function handleChangeSelect(value) {
+    console.log(`selected ${value}`);
+  }
   // Forma functions
   const handleChange = (i, e) => {
     const newFormValues = [...formValues];
@@ -42,14 +47,18 @@ const Audit = () => {
             <input
               type="text"
               name="name"
-              placeholder="Problema"
+              placeholder="Item"
               value={element.name || ''}
               onChange={(e) => handleChange(index, e)}
             />
-            <select>
-              <option value="funcionando">funcionando</option>
-              <option value="nao funcionando">nao funcionando</option>
-            </select>
+            <Select
+              placeholder="Status do Item"
+              style={{ width: 150 }}
+              onChange={() => handleChangeSelect}
+            >
+              <Option value="NOK">NOK</Option>
+              <Option value="OK">OK</Option>
+            </Select>
 
             <input
               type="text"

@@ -18,7 +18,6 @@ export const Form = styled.form`
   div {
     display: flex;
     align-items: center;
-    border: solid blue 1px;
     margin-top: 5px;
     max-width: 300px;
 
@@ -31,6 +30,7 @@ export const Form = styled.form`
       margin-left: 4%;
       border: none;
       border-radius: 8px;
+      margin-right: 5px;
       background: #edf2f4;
       :nth-child(1) {
         margin-top: 5%;
