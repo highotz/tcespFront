@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 import api from '../api';
@@ -48,11 +49,15 @@ export const AuthProvider: React.FC = ({ children }) => {
       const response = await api.post('/sessions', data);
       if (response.status === 200) {
         const { token } = response.data;
-        const { email, admin } = response.data.user;
+        const { email, admin, id_tecesp } = response.data.user;
         api.defaults.headers.common.authorization = `Bearer ${token}`;
+        api.defaults.headers.common.userId = id_tecesp;
+
         setUser({ userLogin: email, userToken: token, flagAdmin: admin });
+
         localStorage.setItem('user', JSON.stringify(email));
         localStorage.setItem('token', JSON.stringify(token));
+
         if (admin) {
           localStorage.setItem('admin', JSON.stringify(admin));
         } else {
