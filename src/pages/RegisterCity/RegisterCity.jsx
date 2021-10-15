@@ -25,6 +25,7 @@ const RegisterCity = () => {
   const [url, setUrl] = useState('');
   const [idMunicipio, setIdMunicipio] = useState('');
   const [tableData, setTableData] = useState([]);
+
   const showModal = () => {
     setIsModalVisible(true);
   };

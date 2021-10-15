@@ -4,7 +4,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import api from '../../api';
 import logoTcesp from '../../assets/images/logo_audit_redondo.png';
 import { Button } from '../../components/Button/Button';
 import AuthContext from '../../contexts/authContext';

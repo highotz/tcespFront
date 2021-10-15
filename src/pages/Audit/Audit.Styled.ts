@@ -92,3 +92,83 @@ export const AddButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
+export const Find = styled.div`
+  margin-top: 2%;
+  height: 10%;
+  width: 23%;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  margin-left: 3%;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.43);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.43);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.43);
+  button {
+    width: 50%;
+    height: 60%;
+    border-radius: 8px;
+    font-weight: 500;
+    background: #3a81c3;
+    color: #fff;
+    padding: 0 40px;
+    font-size: large;
+    font-weight: 600;
+    font-family: 'Now';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    transition: filter 0.2s;
+    i {
+      margin-right: 2px;
+      margin-left: 0px;
+    }
+    &:not(:disabled):hover {
+      filter: brightness(0.9);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+`;
+
+export const Button = styled.button`
+  width: 20%;
+  height: 20%;
+  border-radius: 8px;
+  font-weight: 500;
+  margin: auto;
+  background: #3a81c3;
+  color: #fff;
+  padding: 0 40px;
+  font-size: large;
+  font-weight: 600;
+  font-family: 'Now';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  transition: filter 0.2s;
+  i {
+    margin-right: 2px;
+    margin-left: 0px;
+  }
+  &:not(:disabled):hover {
+    filter: brightness(0.9);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
