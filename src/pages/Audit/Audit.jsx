@@ -12,6 +12,7 @@ import {
   AddButton,
   Find,
   Button,
+  DivInput,
 } from './Audit.Styled';
 import translateTable from '../../utils/tableTranslate';
 import api from '../../api';
@@ -23,6 +24,7 @@ const Audit = () => {
   const [tableData, setTableData] = useState([]);
   const [isAuditing, setIsAuditing] = useState(false);
   const [cityId, setCityId] = useState('');
+  const [city, setCity] = useState('');
   const [select, setSelect] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
 
@@ -30,11 +32,6 @@ const Audit = () => {
   const [formValues, setFormValues] = useState([
     { title: '', description: '', status: '' },
   ]);
-
-  //    city_id: '',
-  //    due_date: '',
-  //    itens: [{ title: '', description: '', status: '' }],
-  //  }
 
   const handleData = async () => {
     const response = await api.get('/citys');
@@ -121,6 +118,8 @@ const Audit = () => {
             ]}
             onRowClick={(e, rowData) => {
               window.open(rowData.site, '_blank');
+              setCityId(rowData.id);
+              setCity(rowData.name);
               setIsModalVisible(false);
               setIsAuditing(true);
             }}
@@ -134,11 +133,12 @@ const Audit = () => {
       </Find>
       {isAuditing ? (
         <Form onSubmit={handleSubmit}>
+          <h1>{`Audição do município ${city}`}</h1>
           <input type="hidden" name="id_audit" />
           <input type="hidden" name="id_city" value={cityId} />
           <input type="hidden" name="dueDate" value={dueDate} />
           {formValues.map((element, index) => (
-            <div key={index}>
+            <DivInput key={index}>
               <input
                 type="text"
                 name="title"
@@ -176,11 +176,11 @@ const Audit = () => {
                   <GrFormSubtract />
                 </RemoveButton>
               ) : null}
-            </div>
+            </DivInput>
           ))}
           <div className="button-section">
             <button className="button submit" type="submit">
-              Submit
+              Finalizar
             </button>
           </div>
         </Form>

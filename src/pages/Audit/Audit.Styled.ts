@@ -15,26 +15,26 @@ export const Form = styled.form`
   margin: auto;
   margin-top: 2%;
   background: white;
-  div {
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
-    max-width: 300px;
+`;
 
+export const DivInput = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  max-width: 300px;
+  margin-left: 27%;
+
+  input {
+    margin-top: 2%;
+    margin-left: 4%;
+    width: 600px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 5px;
+    background: #edf2f4;
     :nth-child(1) {
-      margin-top: 10px;
-    }
-
-    input {
-      margin-top: 2%;
-      margin-left: 4%;
-      border: none;
-      border-radius: 8px;
-      margin-right: 5px;
-      background: #edf2f4;
-      :nth-child(1) {
-        margin-top: 5%;
-      }
+      margin-top: 5%;
     }
   }
 `;
@@ -150,6 +150,7 @@ export const Button = styled.button`
   color: #fff;
   padding: 0 40px;
   font-size: large;
+  /* margin-top: 20px; */
   font-weight: 600;
   font-family: 'Now';
   display: flex;
