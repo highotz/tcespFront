@@ -18,6 +18,7 @@ import {
 } from './RegisterUsers.Styled';
 import api from '../../api';
 import translateTable from '../../utils/tableTranslate';
+import headers from '../../utils/getHeaders';
 
 const RegisterUsers = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -31,19 +32,7 @@ const RegisterUsers = () => {
     setIsModalVisible(true);
   };
 
-  const getCredentials = () => {
-    const token = localStorage.getItem('token');
-    const idUserStorage = localStorage.getItem('idUser');
-    return {
-      headers: {
-        authorization: `Bearer ${token.replaceAll('"', '')}`,
-        userId: idUserStorage.replaceAll('"', ''),
-      },
-    };
-  };
-
   const handleData = async () => {
-    const headers = getCredentials();
     const response = await api.get('/users/all-users', headers);
     setTableData(response.data);
   };
@@ -149,7 +138,6 @@ const RegisterUsers = () => {
       return;
     }
 
-    const headers = getCredentials();
     const response = await api.post(
       `/users`,
       {

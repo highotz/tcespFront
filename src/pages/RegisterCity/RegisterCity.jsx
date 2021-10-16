@@ -18,6 +18,7 @@ import {
   Find,
   Button,
 } from './RegisterCity.Styled';
+import headers from '../../utils/getHeaders';
 
 const RegisterCity = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,24 +27,12 @@ const RegisterCity = () => {
   const [idMunicipio, setIdMunicipio] = useState('');
   const [tableData, setTableData] = useState([]);
 
-  const getCredentials = () => {
-    const token = localStorage.getItem('token');
-    const idUser = localStorage.getItem('idUser');
-    return [token, idUser];
-  };
-
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleData = async () => {
-    const [token, idUser] = getCredentials();
-    const response = await api.get('/citys', {
-      headers: {
-        authorization: `Bearer ${token.replaceAll('"', '')}`,
-        userId: idUser.replaceAll('"', ''),
-      },
-    });
+    const response = await api.get('/citys', headers);
     setTableData(response.data);
   };
 
@@ -56,13 +45,7 @@ const RegisterCity = () => {
   };
 
   const handleEdit = async (rowData) => {
-    const [token, idUser] = getCredentials();
-    const response = await api.get(`/citys/${rowData.id}`, {
-      headers: {
-        authorization: `Bearer ${token.replaceAll('"', '')}`,
-        userId: idUser.replaceAll('"', ''),
-      },
-    });
+    const response = await api.get(`/citys/${rowData.id}`, headers);
     const idCity = response.data.id;
     const nameCity = response.data.name;
     const urlCity = response.data.site;
@@ -78,19 +61,13 @@ const RegisterCity = () => {
   };
 
   const updateCity = async () => {
-    const [token, idUser] = getCredentials();
     api.patch(
       `/citys/update-url/${idMunicipio}`,
       {
         name: municipio,
         site: url,
       },
-      {
-        headers: {
-          authorization: `Bearer ${token.replaceAll('"', '')}`,
-          userId: idUser.replaceAll('"', ''),
-        },
-      },
+      headers,
     );
     toast.success(`Dados do município ${municipio} atualizados com sucesso !`, {
       position: 'top-center',
@@ -105,19 +82,13 @@ const RegisterCity = () => {
   };
 
   const createCity = async () => {
-    const [token, idUser] = getCredentials();
     api.post(
       `/citys`,
       {
         name: municipio,
         site: url,
       },
-      {
-        headers: {
-          authorization: `Bearer ${token.replaceAll('"', '')}`,
-          userId: idUser.replaceAll('"', ''),
-        },
-      },
+      headers,
     );
     toast.success(`Município ${municipio} criado com sucesso`, {
       position: 'top-center',
