@@ -115,7 +115,7 @@ export const Register = styled.div`
 
 export const Button = styled.button`
   width: 20%;
-  height: 20%;
+  height: 80%;
   border-radius: 8px;
   font-weight: 500;
   margin: auto;

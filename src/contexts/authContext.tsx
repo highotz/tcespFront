@@ -50,6 +50,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (response.status === 200) {
         const { token } = response.data;
         const { email, admin, id_tecesp } = response.data.user;
+
         api.defaults.headers.common.authorization = `Bearer ${token}`;
         api.defaults.headers.common.userId = id_tecesp;
 
@@ -57,6 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         localStorage.setItem('user', JSON.stringify(email));
         localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('idUser', JSON.stringify(id_tecesp));
 
         if (admin) {
           localStorage.setItem('admin', JSON.stringify(admin));

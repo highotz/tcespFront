@@ -26,14 +26,28 @@ const RegisterCity = () => {
   const [idMunicipio, setIdMunicipio] = useState('');
   const [tableData, setTableData] = useState([]);
 
+  const getCredentials = () => {
+    const token = localStorage.getItem('token');
+    const idUser = localStorage.getItem('idUser');
+    return [token, idUser];
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleData = async () => {
-    const response = await api.get('/citys');
-
-    if (response.status === 200) {
+    try {
+      const response = await api.get('/citys');
+      setTableData(response.data);
+    } catch (error) {
+      const [token, idUser] = getCredentials();
+      const response = await api.get('/citys', {
+        headers: {
+          authorization: `Bearer ${token.replaceAll('"', '')}`,
+          userId: idUser.replaceAll('"', ''),
+        },
+      });
       setTableData(response.data);
     }
   };
@@ -47,54 +61,132 @@ const RegisterCity = () => {
   };
 
   const handleEdit = async (rowData) => {
-    const response = await api.get(`/citys/${rowData.id}`);
-    const idCity = response.data.id;
-    const nameCity = response.data.name;
-    const urlCity = response.data.site;
-    setIsModalVisible(false);
-    setIdMunicipio(idCity);
-    setMunicipio(nameCity);
-    setUrl(urlCity);
+    try {
+      const response = await api.get(`/citys/${rowData.id}`);
+      const idCity = response.data.id;
+      const nameCity = response.data.name;
+      const urlCity = response.data.site;
+      setIsModalVisible(false);
+      setIdMunicipio(idCity);
+      setMunicipio(nameCity);
+      setUrl(urlCity);
+    } catch (error) {
+      const [token, idUser] = getCredentials();
+      const response = await api.get(`/citys/${rowData.id}`, {
+        headers: {
+          authorization: `Bearer ${token.replaceAll('"', '')}`,
+          userId: idUser.replaceAll('"', ''),
+        },
+      });
+      const idCity = response.data.id;
+      const nameCity = response.data.name;
+      const urlCity = response.data.site;
+      setIsModalVisible(false);
+      setIdMunicipio(idCity);
+      setMunicipio(nameCity);
+      setUrl(urlCity);
+    }
   };
   const clearForm = () => {
     setUrl('');
     setIdMunicipio('');
     setMunicipio('');
   };
+
   const updateCity = async () => {
-    const response = await api.put(`/citys/${idMunicipio}`, {
-      name: municipio,
-      url,
-    });
-    const { name } = response.data;
-    toast.success(`Dados do município ${name} atualizados`, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    clearForm();
+    try {
+      api.patch(`/citys/update-url/${idMunicipio}`, {
+        name: municipio,
+        site: url,
+      });
+
+      toast.success(
+        `Dados do município ${municipio} atualizados com sucesso !`,
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
+      clearForm();
+    } catch (error) {
+      const [token, idUser] = getCredentials();
+      api.patch(
+        `/citys/update-url/${idMunicipio}`,
+        {
+          name: municipio,
+          site: url,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token.replaceAll('"', '')}`,
+            userId: idUser.replaceAll('"', ''),
+          },
+        },
+      );
+      toast.success(
+        `Dados do município ${municipio} atualizados com sucesso !`,
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
+      clearForm();
+    }
   };
 
   const createCity = async () => {
-    const response = await api.post(`/citys`, {
-      name: municipio,
-      url,
-    });
-    const { name } = response.data;
-    toast.success(`Município ${name} criado com sucesso`, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    clearForm();
+    try {
+      api.post(`/citys`, {
+        name: municipio,
+        site: url,
+      });
+
+      toast.success(`Município ${municipio} criado com sucesso`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      clearForm();
+    } catch (error) {
+      const [token, idUser] = getCredentials();
+      api.post(
+        `/citys`,
+        {
+          name: municipio,
+          site: url,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token.replaceAll('"', '')}`,
+            userId: idUser.replaceAll('"', ''),
+          },
+        },
+      );
+      toast.success(`Município ${municipio} criado com sucesso`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      clearForm();
+    }
   };
 
   const handleSubmit = () => {
@@ -181,10 +273,26 @@ const RegisterCity = () => {
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Digite a URL do portal da transparência"
           />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: 20,
+              height: 50,
+              width: 500,
+              marginLeft: '4%',
+            }}
+          >
+            <Button type="button" onClick={handleSubmit}>
+              {idMunicipio && municipio ? 'Atualizar' : 'Cadastrar'}
+            </Button>
 
-          <Button type="button" onClick={handleSubmit}>
-            {idMunicipio && municipio ? 'Atualizar' : 'Cadastrar'}
-          </Button>
+            {idMunicipio && municipio ? (
+              <Button type="button" onClick={clearForm}>
+                Limpar
+              </Button>
+            ) : null}
+          </div>
         </form>
       </Register>
     </Content>
