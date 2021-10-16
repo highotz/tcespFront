@@ -70,7 +70,7 @@ const Audit = () => {
       warningMessage('Por favor preencher o item auditado !');
       return false;
     }
-    if (!formIsEmpty[0]) {
+    if (formIsEmpty[0]) {
       warningMessage('Por favor preencher o item auditado !');
       return false;
     }
