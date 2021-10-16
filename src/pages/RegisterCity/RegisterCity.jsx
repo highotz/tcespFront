@@ -7,7 +7,6 @@ import { FiSearch } from 'react-icons/fi';
 import { Modal } from 'antd';
 import MaterialTable from 'material-table';
 import 'antd/dist/antd.css';
-import { toast } from 'react-toastify';
 import api from '../../api';
 import translateTable from '../../utils/tableTranslate';
 
@@ -19,6 +18,7 @@ import {
   Button,
 } from './RegisterCity.Styled';
 import headers from '../../utils/getHeaders';
+import { errorMessage, sucessMessage } from '../../utils/toastMensages';
 
 const RegisterCity = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -69,15 +69,9 @@ const RegisterCity = () => {
       },
       headers,
     );
-    toast.success(`Dados do município ${municipio} atualizados com sucesso !`, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    const messageUpdate = `Dados do município ${municipio} atualizados com sucesso !`;
+    sucessMessage(messageUpdate);
+
     clearForm();
   };
 
@@ -90,29 +84,15 @@ const RegisterCity = () => {
       },
       headers,
     );
-    toast.success(`Município ${municipio} criado com sucesso`, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    const messageCreate = `Município ${municipio} criado com sucesso`;
+    sucessMessage(messageCreate);
+
     clearForm();
   };
 
   const handleSubmit = () => {
     if (!municipio || !url) {
-      toast.error('Preencha todos os campos !!', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      errorMessage('Preencha todos os campos !!');
     } else if (idMunicipio && municipio) {
       updateCity();
     } else {

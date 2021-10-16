@@ -5,6 +5,7 @@ import { Modal, Select } from 'antd';
 import { GrFormAdd, GrFormSubtract } from 'react-icons/gr';
 import MaterialTable from 'material-table';
 import { FiSearch } from 'react-icons/fi';
+
 import {
   Container,
   Form,
@@ -16,6 +17,12 @@ import {
 } from './Audit.Styled';
 import translateTable from '../../utils/tableTranslate';
 import api from '../../api';
+import headers from '../../utils/getHeaders';
+import {
+  errorMessage,
+  sucessMessage,
+  warningMessage,
+} from '../../utils/toastMensages';
 
 const { Option } = Select;
 
@@ -25,7 +32,8 @@ const Audit = () => {
   const [isAuditing, setIsAuditing] = useState(false);
   const [cityId, setCityId] = useState('');
   const [city, setCity] = useState('');
-  const [dueDate, setDueDate] = useState(new Date());
+
+  const dueDate = new Date();
 
   // const [isAuditing, setIsAuditing] = useState(false);
   const [formValues, setFormValues] = useState([
@@ -33,7 +41,7 @@ const Audit = () => {
   ]);
 
   const handleData = async () => {
-    const response = await api.get('/citys');
+    const response = await api.get('/citys', headers);
 
     if (response.status === 200) {
       setTableData(response.data);
@@ -49,7 +57,25 @@ const Audit = () => {
   }, [isModalVisible]);
 
   const clearForm = () => {
-    setFormValues([{ title: '', description: '' }]);
+    setFormValues([{ title: '', description: '', status: '' }]);
+    setCity('');
+    setIsAuditing(false);
+  };
+
+  const validateItens = () => {
+    const formIsEmpty = [
+      ...new Set(formValues.map((value) => value.title === '')),
+    ];
+    if (formIsEmpty.length > 1) {
+      warningMessage('Por favor preencher o item auditado !');
+      return false;
+    }
+    if (!formIsEmpty[0]) {
+      warningMessage('Por favor preencher o item auditado !');
+      return false;
+    }
+
+    return true;
   };
 
   const handleOk = () => {
@@ -83,14 +109,54 @@ const Audit = () => {
     setFormValues(newFormValues);
   };
 
-  const handleSubmit = (event) => {
+  //  {
+  //    parei aqui, preciso parar o submit do form se o valor do item estiver vazio
+  //  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const dataSubmit = {
-      city_id: cityId,
-      due_date: dueDate,
-      itens: formValues,
-    };
-    alert(JSON.stringify(dataSubmit));
+    if (validateItens()) {
+      const ticketSubmit = {
+        city_id: cityId,
+        due_date: dueDate,
+        itens: formValues,
+        description: '',
+        status: '',
+        title: '',
+      };
+      const responseTicket = await api.post(
+        '/tickets/new-ticket',
+        ticketSubmit,
+        headers,
+      );
+
+      if (responseTicket.status === 201) {
+        const { id } = responseTicket.data;
+
+        try {
+          formValues.forEach(async (value, index) => {
+            const response = await api.post(
+              `/tickets/new-item/${id}`,
+              {
+                title: value.title,
+                description: value.description,
+              },
+              headers,
+            );
+            if (response.status !== 201) {
+              throw new Error(`Problema ao criar o item ${index}`);
+            }
+          });
+        } catch (error) {
+          errorMessage('Erro ao salvar a auditoria....');
+          return;
+        }
+
+        const mensage = `Auditoria do municipio ${city} salva com sucesso`;
+        sucessMessage(mensage);
+        clearForm();
+      }
+    }
   };
 
   return (
@@ -162,7 +228,7 @@ const Audit = () => {
               <input
                 type="text"
                 name="title"
-                placeholder="Problema"
+                placeholder="Item auditado"
                 value={element.title || ''}
                 onChange={(e) => handleChange(index, e)}
               />

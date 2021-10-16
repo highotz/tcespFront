@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { createContext, useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import api from '../api';
+import { warningMessage } from '../utils/toastMensages';
 
 interface UserData {
   userLogin: string;
@@ -67,15 +67,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
       }
     } catch (error) {
-      toast.warning('Email ou senha incorretos', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      warningMessage('Email ou senha incorretos');
     }
   }
   function signOut() {

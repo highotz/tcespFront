@@ -19,6 +19,7 @@ import {
 import api from '../../api';
 import translateTable from '../../utils/tableTranslate';
 import headers from '../../utils/getHeaders';
+import { errorMessage, sucessMessage } from '../../utils/toastMensages';
 
 const RegisterUsers = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -126,15 +127,7 @@ const RegisterUsers = () => {
 
   const createUser = async () => {
     if (!userName || !userEmail || !userPassword) {
-      toast.error('Preencha todos os campos !!', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      errorMessage('Preencha todos os campos !!');
       return;
     }
 
@@ -148,15 +141,9 @@ const RegisterUsers = () => {
       headers,
     );
     if (response.status === 201) {
-      toast.success(`Usuario ${userName} criado com sucesso`, {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      const message = `Usuario ${userName} criado com sucesso`;
+      sucessMessage(message);
+
       clearForm();
     }
   };

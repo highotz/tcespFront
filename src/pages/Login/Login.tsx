@@ -3,10 +3,10 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useState, useContext } from 'react';
-import { toast } from 'react-toastify';
 import logoTcesp from '../../assets/images/logo_audit_redondo.png';
 import { Button } from '../../components/Button/Button';
 import AuthContext from '../../contexts/authContext';
+import { warningMessage } from '../../utils/toastMensages';
 import './login.scss';
 
 export default function Login() {
@@ -16,15 +16,7 @@ export default function Login() {
 
   const handleSign = async (email: string, password: string) => {
     if (!email || !password) {
-      toast.error('Preencha o seu email e senha!!', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      warningMessage('Preencha o seu email e senha!!');
     } else {
       signIn(email, password);
     }
