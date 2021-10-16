@@ -1,9 +1,21 @@
+/* eslint-disable import/no-mutable-exports */
 const token = localStorage.getItem('token');
 const idUserStorage = localStorage.getItem('idUser');
-const headers = {
-  headers: {
-    authorization: `Bearer ${token.replaceAll('"', '')}`,
-    userId: idUserStorage.replaceAll('"', ''),
-  },
-};
+let headers;
+if (!token || !idUserStorage) {
+  headers = {
+    headers: {
+      authorization: `Bearer ''`,
+      userId: '',
+    },
+  };
+} else {
+  headers = {
+    headers: {
+      authorization: `Bearer ${token.replaceAll('"', '')}`,
+      userId: idUserStorage.replaceAll('"', ''),
+    },
+  };
+}
+
 export default headers;
