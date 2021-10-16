@@ -17,6 +17,7 @@ import {
   Button,
 } from './RegisterUsers.Styled';
 import api from '../../api';
+import translateTable from '../../utils/tableTranslate';
 
 const RegisterUsers = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,12 +30,27 @@ const RegisterUsers = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
-  const handleData = async () => {
-    const response = await api.get('/useres');
-    if (response.status === 200) {
-      setTableData(response.data);
-    }
+
+  const getCredentials = () => {
+    const token = localStorage.getItem('token');
+    const idUserStorage = localStorage.getItem('idUser');
+    return {
+      headers: {
+        authorization: `Bearer ${token.replaceAll('"', '')}`,
+        userId: idUserStorage.replaceAll('"', ''),
+      },
+    };
   };
+
+  const handleData = async () => {
+    const headers = getCredentials();
+    const response = await api.get('/users/all-users', headers);
+    setTableData(response.data);
+  };
+
+  useEffect(() => {
+    handleData();
+  }, [isModalVisible]);
 
   useEffect(() => {
     handleData();
@@ -46,10 +62,80 @@ const RegisterUsers = () => {
   const handleEdit = (rowData) => {
     setIsModalVisible(false);
     setUserName(rowData.name);
-    setIdUser(rowData.idUser);
+    setIdUser(rowData.id_tecesp);
+    setUserEmail(rowData.email);
   };
 
-  const handleSubmit = () => {
+  const clearForm = () => {
+    setUserEmail('');
+    setUserName('');
+    setUserPassword('');
+    setIdUser('');
+  };
+
+  const updateUser = async () => {
+    // try {
+    //   api.patch(`/citys/update-url/${idMunicipio}`, {
+    //     name: municipio,
+    //     site: url,
+    //   });
+
+    //   toast.success(
+    //     `Dados do município ${municipio} atualizados com sucesso !`,
+    //     {
+    //       position: 'top-center',
+    //       autoClose: 3000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     },
+    //   );
+    //   clearForm();
+    // } catch (error) {
+    //   const [token, idUser] = getCredentials();
+    //   api.patch(
+    //     `/citys/update-url/${idMunicipio}`,
+    //     {
+    //       name: municipio,
+    //       site: url,
+    //     },
+    //     {
+    //       headers: {
+    //         authorization: `Bearer ${token.replaceAll('"', '')}`,
+    //         userId: idUser.replaceAll('"', ''),
+    //       },
+    //     },
+    //   );
+    //   toast.success(
+    //     `Dados do município ${municipio} atualizados com sucesso !`,
+    //     {
+    //       position: 'top-center',
+    //       autoClose: 3000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     },
+    //   );
+    //   clearForm();
+    // }
+
+    toast.success(`Dados do usuario ${userName} atualizados com sucesso !`, {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    clearForm();
+  };
+
+  const createUser = async () => {
     if (!userName || !userEmail || !userPassword) {
       toast.error('Preencha todos os campos !!', {
         position: 'top-center',
@@ -60,6 +146,38 @@ const RegisterUsers = () => {
         draggable: true,
         progress: undefined,
       });
+      return;
+    }
+
+    const headers = getCredentials();
+    const response = await api.post(
+      `/users`,
+      {
+        name: userName,
+        email: userEmail,
+        password: userPassword,
+      },
+      headers,
+    );
+    if (response.status === 201) {
+      toast.success(`Usuario ${userName} criado com sucesso`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      clearForm();
+    }
+  };
+
+  const handleSubmit = () => {
+    if (idUser && userName) {
+      updateUser();
+    } else {
+      createUser();
     }
   };
   return (
@@ -87,19 +205,11 @@ const RegisterUsers = () => {
           <MaterialTable
             title="Usuarios cadastrados"
             columns={[
-              { title: 'id', field: 'idUser', hidden: true },
+              { title: 'id', field: 'id_tecesp', hidden: true },
               { title: 'Nome', field: 'name' },
+              { title: 'Email', field: 'email' },
             ]}
-            data={[
-              {
-                name: 'Admin',
-                idUser: '1',
-              },
-              {
-                name: 'Analista',
-                idUser: '2',
-              },
-            ]}
+            data={tableData}
             actions={[
               {
                 icon: 'edit',
@@ -110,26 +220,7 @@ const RegisterUsers = () => {
             options={{
               actionsColumnIndex: -1,
             }}
-            localization={{
-              body: {
-                emptyDataSourceMessage: 'Nenhum registro para exibir',
-              },
-              header: {
-                actions: 'Ações',
-              },
-              toolbar: {
-                searchTooltip: 'Pesquisar',
-                searchPlaceholder: 'Pesquisar',
-              },
-              pagination: {
-                labelRowsSelect: 'linhas',
-                labelDisplayedRows: '{count} de {from}-{to}',
-                firstTooltip: 'Primeira página',
-                previousTooltip: 'Página anterior',
-                nextTooltip: 'Próxima página',
-                lastTooltip: 'Última página',
-              },
-            }}
+            localization={translateTable}
           />
         </Modal>
       </Find>
@@ -166,9 +257,26 @@ const RegisterUsers = () => {
             placeholder="Digite a senha do usuário"
           />
 
-          <Button type="button" onClick={handleSubmit}>
-            {idUser && userName ? 'Atualizar' : 'Cadastrar'}
-          </Button>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: 20,
+              height: 50,
+              width: 500,
+              marginLeft: '4%',
+            }}
+          >
+            <Button type="button" onClick={handleSubmit}>
+              {idUser && userName ? 'Atualizar' : 'Cadastrar'}
+            </Button>
+
+            {idUser && userName ? (
+              <Button type="button" onClick={clearForm}>
+                Limpar
+              </Button>
+            ) : null}
+          </div>
         </form>
       </Register>
     </Content>

@@ -37,19 +37,14 @@ const RegisterCity = () => {
   };
 
   const handleData = async () => {
-    try {
-      const response = await api.get('/citys');
-      setTableData(response.data);
-    } catch (error) {
-      const [token, idUser] = getCredentials();
-      const response = await api.get('/citys', {
-        headers: {
-          authorization: `Bearer ${token.replaceAll('"', '')}`,
-          userId: idUser.replaceAll('"', ''),
-        },
-      });
-      setTableData(response.data);
-    }
+    const [token, idUser] = getCredentials();
+    const response = await api.get('/citys', {
+      headers: {
+        authorization: `Bearer ${token.replaceAll('"', '')}`,
+        userId: idUser.replaceAll('"', ''),
+      },
+    });
+    setTableData(response.data);
   };
 
   useEffect(() => {
@@ -61,31 +56,20 @@ const RegisterCity = () => {
   };
 
   const handleEdit = async (rowData) => {
-    try {
-      const response = await api.get(`/citys/${rowData.id}`);
-      const idCity = response.data.id;
-      const nameCity = response.data.name;
-      const urlCity = response.data.site;
-      setIsModalVisible(false);
-      setIdMunicipio(idCity);
-      setMunicipio(nameCity);
-      setUrl(urlCity);
-    } catch (error) {
-      const [token, idUser] = getCredentials();
-      const response = await api.get(`/citys/${rowData.id}`, {
-        headers: {
-          authorization: `Bearer ${token.replaceAll('"', '')}`,
-          userId: idUser.replaceAll('"', ''),
-        },
-      });
-      const idCity = response.data.id;
-      const nameCity = response.data.name;
-      const urlCity = response.data.site;
-      setIsModalVisible(false);
-      setIdMunicipio(idCity);
-      setMunicipio(nameCity);
-      setUrl(urlCity);
-    }
+    const [token, idUser] = getCredentials();
+    const response = await api.get(`/citys/${rowData.id}`, {
+      headers: {
+        authorization: `Bearer ${token.replaceAll('"', '')}`,
+        userId: idUser.replaceAll('"', ''),
+      },
+    });
+    const idCity = response.data.id;
+    const nameCity = response.data.name;
+    const urlCity = response.data.site;
+    setIsModalVisible(false);
+    setIdMunicipio(idCity);
+    setMunicipio(nameCity);
+    setUrl(urlCity);
   };
   const clearForm = () => {
     setUrl('');
@@ -94,99 +78,57 @@ const RegisterCity = () => {
   };
 
   const updateCity = async () => {
-    try {
-      api.patch(`/citys/update-url/${idMunicipio}`, {
+    const [token, idUser] = getCredentials();
+    api.patch(
+      `/citys/update-url/${idMunicipio}`,
+      {
         name: municipio,
         site: url,
-      });
-
-      toast.success(
-        `Dados do município ${municipio} atualizados com sucesso !`,
-        {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token.replaceAll('"', '')}`,
+          userId: idUser.replaceAll('"', ''),
         },
-      );
-      clearForm();
-    } catch (error) {
-      const [token, idUser] = getCredentials();
-      api.patch(
-        `/citys/update-url/${idMunicipio}`,
-        {
-          name: municipio,
-          site: url,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${token.replaceAll('"', '')}`,
-            userId: idUser.replaceAll('"', ''),
-          },
-        },
-      );
-      toast.success(
-        `Dados do município ${municipio} atualizados com sucesso !`,
-        {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        },
-      );
-      clearForm();
-    }
+      },
+    );
+    toast.success(`Dados do município ${municipio} atualizados com sucesso !`, {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    clearForm();
   };
 
   const createCity = async () => {
-    try {
-      api.post(`/citys`, {
+    const [token, idUser] = getCredentials();
+    api.post(
+      `/citys`,
+      {
         name: municipio,
         site: url,
-      });
-
-      toast.success(`Município ${municipio} criado com sucesso`, {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      clearForm();
-    } catch (error) {
-      const [token, idUser] = getCredentials();
-      api.post(
-        `/citys`,
-        {
-          name: municipio,
-          site: url,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token.replaceAll('"', '')}`,
+          userId: idUser.replaceAll('"', ''),
         },
-        {
-          headers: {
-            authorization: `Bearer ${token.replaceAll('"', '')}`,
-            userId: idUser.replaceAll('"', ''),
-          },
-        },
-      );
-      toast.success(`Município ${municipio} criado com sucesso`, {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      clearForm();
-    }
+      },
+    );
+    toast.success(`Município ${municipio} criado com sucesso`, {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    clearForm();
   };
 
   const handleSubmit = () => {
