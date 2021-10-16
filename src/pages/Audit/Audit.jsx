@@ -25,7 +25,6 @@ const Audit = () => {
   const [isAuditing, setIsAuditing] = useState(false);
   const [cityId, setCityId] = useState('');
   const [city, setCity] = useState('');
-  const [select, setSelect] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
 
   // const [isAuditing, setIsAuditing] = useState(false);
@@ -67,9 +66,11 @@ const Audit = () => {
     } else if (e === 'NOK') {
       const renamedStatus = 'pending';
       newFormValues[i].status = renamedStatus;
+      setFormValues(newFormValues);
     } else {
       const renamedStatus = 'ok';
       newFormValues[i].status = renamedStatus;
+      setFormValues(newFormValues);
     }
   };
 
@@ -131,9 +132,28 @@ const Audit = () => {
           />
         </Modal>
       </Find>
+      {city ? (
+        <div
+          style={{
+            margin: 'auto',
+            display: 'flex',
+            marginTop: 30,
+            alignItems: 'center',
+          }}
+        >
+          <h1
+            style={{
+              margin: 'auto',
+              fontFamily: 'Now',
+              fontWeight: '400',
+            }}
+          >
+            Audição do município: <strong>{city}</strong>
+          </h1>
+        </div>
+      ) : null}
       {isAuditing ? (
         <Form onSubmit={handleSubmit}>
-          <h1>{`Audição do município ${city}`}</h1>
           <input type="hidden" name="id_audit" />
           <input type="hidden" name="id_city" value={cityId} />
           <input type="hidden" name="dueDate" value={dueDate} />
@@ -148,27 +168,38 @@ const Audit = () => {
               />
               <Select
                 placeholder="Status do Item"
-                style={{ width: 150 }}
+                style={{
+                  width: 150,
+                  background: '#edf2f4',
+                  borderRadius: 8,
+                  marginTop: 12,
+                  marginLeft: 14,
+                  marginRight: 14,
+                  height: 30,
+                }}
                 onChange={(value) => handleChange(index, value, 0)}
+                bordered={false}
               >
                 <Option value="NOK">NOK</Option>
                 <Option value="OK">OK</Option>
               </Select>
 
-              <input
-                type="text"
-                name="description"
-                placeholder="Comentarios"
-                value={element.description || ''}
-                onChange={(e) => handleChange(index, e)}
-              />
+              {formValues[index].status === 'pending' ? (
+                <input
+                  type="text"
+                  name="description"
+                  placeholder="Comentarios"
+                  value={element.description || ''}
+                  onChange={(e) => handleChange(index, e)}
+                />
+              ) : null}
 
               {index === formValues.length - 1 ? (
                 <AddButton type="button" onClick={() => addFormFields()}>
                   <GrFormAdd />
                 </AddButton>
               ) : null}
-              {index ? (
+              {index !== formValues.length - 1 ? (
                 <RemoveButton
                   type="button"
                   onClick={() => removeFormFields(index)}
@@ -178,10 +209,12 @@ const Audit = () => {
               ) : null}
             </DivInput>
           ))}
-          <div className="button-section">
-            <button className="button submit" type="submit">
-              Finalizar
-            </button>
+          <div
+            style={{
+              marginTop: 30,
+            }}
+          >
+            <Button type="submit">Finalizar</Button>
           </div>
         </Form>
       ) : null}

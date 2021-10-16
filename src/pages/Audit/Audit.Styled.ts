@@ -3,44 +3,51 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  border: solid;
 `;
 
 export const Form = styled.form`
   width: 90%;
   height: 70%;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
-  border: solid;
+  border-radius: 8px;
   margin: auto;
   margin-top: 2%;
   background: white;
+  overflow-y: auto;
 `;
 
 export const DivInput = styled.div`
   display: flex;
   align-items: center;
+  padding: 0;
   margin-top: 20px;
-  max-width: 300px;
-  margin-left: 27%;
+  max-width: 800px;
+  margin-left: 20%;
 
   input {
-    margin-top: 2%;
-    margin-left: 4%;
-    width: 600px;
+    margin-top: 12px;
+    margin-left: 14px;
+    width: 200px;
     height: 30px;
     border: none;
     border-radius: 8px;
     margin-right: 5px;
     background: #edf2f4;
-    :nth-child(1) {
-      margin-top: 5%;
+
+    :nth-child(3) {
+      width: 1000px;
+    }
+    ::placeholder {
+      color: #bfbfbf;
     }
   }
 `;
 
 export const RemoveButton = styled.button`
   background: #f94144;
+  margin-top: 12px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -69,6 +76,7 @@ export const RemoveButton = styled.button`
 export const AddButton = styled.button`
   background: #90be6d;
   border-radius: 50%;
+  margin-top: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -141,17 +149,18 @@ export const Find = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 20%;
-  height: 20%;
+  width: 15%;
+  height: 100%;
+  max-height: 100px;
   border-radius: 8px;
-  font-weight: 500;
+  margin-top: 10px;
+  font-weight: bold;
   margin: auto;
   background: #3a81c3;
   color: #fff;
   padding: 0 40px;
   font-size: large;
   /* margin-top: 20px; */
-  font-weight: 600;
   font-family: 'Now';
   display: flex;
   justify-content: center;
