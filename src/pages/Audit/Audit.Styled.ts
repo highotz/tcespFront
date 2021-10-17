@@ -116,7 +116,7 @@ export const Find = styled.div`
   -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.43);
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.43);
   button {
-    width: 50%;
+    width: 45%;
     height: 60%;
     border-radius: 8px;
     font-weight: 500;

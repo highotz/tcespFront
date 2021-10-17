@@ -81,7 +81,7 @@ const SideMenu: React.FC = () => {
                     <span>
                       <FiMap />
                     </span>
-                    <p>Municipios</p>
+                    Municipios
                   </NavigationLinks>
                 </li>
                 <li>
@@ -112,7 +112,7 @@ const SideMenu: React.FC = () => {
               <span>
                 <FiList />
               </span>
-              Todos os Chamados
+              Todos as Auditorias
             </NavigationLinks>
           </li>
         </ul>

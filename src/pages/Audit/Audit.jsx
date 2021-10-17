@@ -5,6 +5,7 @@ import { Modal, Select } from 'antd';
 import { GrFormAdd, GrFormSubtract } from 'react-icons/gr';
 import MaterialTable from 'material-table';
 import { FiSearch } from 'react-icons/fi';
+import { AiOutlineAlert } from 'react-icons/ai';
 
 import {
   Container,
@@ -89,13 +90,8 @@ const Audit = () => {
     if (type === 1) {
       newFormValues[i][e.target.name] = e.target.value;
       setFormValues(newFormValues);
-    } else if (e === 'NOK') {
-      const renamedStatus = 'pending';
-      newFormValues[i].status = renamedStatus;
-      setFormValues(newFormValues);
     } else {
-      const renamedStatus = 'ok';
-      newFormValues[i].status = renamedStatus;
+      newFormValues[i].status = e;
       setFormValues(newFormValues);
     }
   };
@@ -109,19 +105,22 @@ const Audit = () => {
     setFormValues(newFormValues);
   };
 
-  //  {
-  //    parei aqui, preciso parar o submit do form se o valor do item estiver vazio
-  //  }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateItens()) {
+      const status =
+        formValues.filter((value) => value.status === 'pending').length >= 1
+          ? 'pending'
+          : 'done';
+
+      console.log(status);
+      console.log(formValues);
       const ticketSubmit = {
         city_id: cityId,
         due_date: dueDate,
         itens: formValues,
         description: '',
-        status: '',
+        status,
         title: '',
       };
       const responseTicket = await api.post(
@@ -129,7 +128,8 @@ const Audit = () => {
         ticketSubmit,
         headers,
       );
-
+      console.log(ticketSubmit);
+      console.log(responseTicket.data);
       if (responseTicket.status === 201) {
         const { id } = responseTicket.data;
 
@@ -162,12 +162,29 @@ const Audit = () => {
   return (
     <Container>
       <Find>
-        <button type="button" onClick={showModal}>
-          <i>
-            <FiSearch />
-          </i>
-          Buscar
-        </button>
+        <div
+          style={{
+            display: 'flex',
+            width: '90%',
+            height: '70%',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <button type="button" onClick={showModal}>
+            <i>
+              <AiOutlineAlert />
+            </i>
+            Auditar
+          </button>
+          <button type="button" onClick={showModal}>
+            <i>
+              <FiSearch />
+            </i>
+            Historico
+          </button>
+        </div>
+
         <Modal
           visible={isModalVisible}
           onOk={handleOk}
@@ -246,8 +263,8 @@ const Audit = () => {
                 onChange={(value) => handleChange(index, value, 0)}
                 bordered={false}
               >
-                <Option value="NOK">NOK</Option>
-                <Option value="OK">OK</Option>
+                <Option value="pending">NOK</Option>
+                <Option value="done">OK</Option>
               </Select>
 
               {formValues[index].status === 'pending' ? (
@@ -265,7 +282,7 @@ const Audit = () => {
                   <GrFormAdd />
                 </AddButton>
               ) : null}
-              {index !== formValues.length - 1 ? (
+              {index ? (
                 <RemoveButton
                   type="button"
                   onClick={() => removeFormFields(index)}
@@ -278,9 +295,14 @@ const Audit = () => {
           <div
             style={{
               marginTop: 30,
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
             <Button type="submit">Finalizar</Button>
+            <Button type="button" onClick={clearForm}>
+              Cancelar
+            </Button>
           </div>
         </Form>
       ) : null}

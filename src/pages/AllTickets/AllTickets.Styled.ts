@@ -161,7 +161,8 @@ export const Button = styled.button`
 
 export const Table = styled.div`
   width: 95%;
-  height: 80%;
+  height: 90%;
+  overflow-y: auto;
   margin-left: 3%;
   margin-top: 3%;
 `;
