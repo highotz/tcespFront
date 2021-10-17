@@ -5,14 +5,14 @@ import React from 'react';
 
 import { Resume } from './Home.styled';
 import Graph from '../../components/Graphs/Graphs';
-import TopProblem from '../../components/TopProblems/TopProblems';
+// import TopProblem from '../../components/TopProblems/TopProblems';
 
 const Home: React.FC = () => {
   return (
     <>
       <Resume>
         <Graph />
-        <TopProblem />
+        {/* <TopProblem /> */}
         {/* <iframe
           src="http://camposdojordao.sp.gov.br/transparencia/"
           sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
