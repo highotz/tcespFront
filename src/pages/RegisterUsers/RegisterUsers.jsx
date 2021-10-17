@@ -7,8 +7,6 @@ import { FiSearch } from 'react-icons/fi';
 import { Modal } from 'antd';
 import MaterialTable from 'material-table';
 import 'antd/dist/antd.css';
-
-import { toast } from 'react-toastify';
 import {
   Content,
   Breadcrumb,
@@ -64,65 +62,21 @@ const RegisterUsers = () => {
   };
 
   const updateUser = async () => {
-    // try {
-    //   api.patch(`/citys/update-url/${idMunicipio}`, {
-    //     name: municipio,
-    //     site: url,
-    //   });
+    const data = userPassword
+      ? {
+          email: userEmail,
+          password: userPassword,
+        }
+      : {
+          email: userEmail,
+        };
 
-    //   toast.success(
-    //     `Dados do município ${municipio} atualizados com sucesso !`,
-    //     {
-    //       position: 'top-center',
-    //       autoClose: 3000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     },
-    //   );
-    //   clearForm();
-    // } catch (error) {
-    //   const [token, idUser] = getCredentials();
-    //   api.patch(
-    //     `/citys/update-url/${idMunicipio}`,
-    //     {
-    //       name: municipio,
-    //       site: url,
-    //     },
-    //     {
-    //       headers: {
-    //         authorization: `Bearer ${token.replaceAll('"', '')}`,
-    //         userId: idUser.replaceAll('"', ''),
-    //       },
-    //     },
-    //   );
-    //   toast.success(
-    //     `Dados do município ${municipio} atualizados com sucesso !`,
-    //     {
-    //       position: 'top-center',
-    //       autoClose: 3000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     },
-    //   );
-    //   clearForm();
-    // }
+    const response = await api.put(`/users/update/${idUser}`, data, headers);
 
-    toast.success(`Dados do usuario ${userName} atualizados com sucesso !`, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    clearForm();
+    if (response.status === 201) {
+      sucessMessage(`Dados do município ${userName} atualizados com sucesso !`);
+      clearForm();
+    }
   };
 
   const createUser = async () => {

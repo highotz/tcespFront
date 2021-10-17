@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/react-in-jsx-scope */
@@ -7,8 +8,7 @@ import MaterialTable from 'material-table';
 import './form.scss';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-import { AiOutlineConsoleSql } from 'react-icons/ai';
-import { Content, Breadcrumb, Table, Find, Button } from './AllTickets.Styled';
+import { Content, Breadcrumb, Table } from './AllTickets.Styled';
 import api from '../../api';
 import headers from '../../utils/getHeaders';
 
@@ -16,6 +16,7 @@ const AllTickets = () => {
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
   const handleData = async () => {
+    setLoading(true);
     const responseTickets = await api.get('/tickets', headers);
 
     // Pega os id_city unicos
@@ -49,6 +50,7 @@ const AllTickets = () => {
     // com os id unicos pegamos os nomes dos usuarios
     const namesUsers = await Promise.all(
       ticketsCitys.map(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         async (value) => (await api.get(`/users/all-users`, headers)).data,
       ),
     );
@@ -63,11 +65,11 @@ const AllTickets = () => {
       };
     });
     setTableData(reponseAdjust);
-    console.log(reponseAdjust);
+    setLoading(false);
   };
   useEffect(() => {
     handleData();
-  }, [loading]);
+  }, []);
   return (
     <Content>
       <Breadcrumb>
