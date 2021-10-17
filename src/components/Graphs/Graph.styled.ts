@@ -8,7 +8,7 @@ export const Graphs = styled.section`
   justify-content: space-between;
 
   div {
-    background: #8d99ae;
+    background: white;
     width: 45%;
     border-radius: 12px;
     display: flex;
