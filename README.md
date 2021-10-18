@@ -1,4 +1,4 @@
-# Audit Center
+# Audit Center :office:
 
 Esse projeto foi desenvolvido para o projeto do TCESP da FIAP dos alunos dos 3 anos de Sistemas de Informção.
 
@@ -10,7 +10,7 @@ Grupo:
   - Higor Hotz Vasconcelos RM: 82031
 ```
 
-## Como rodar o projeto
+## Como rodar o projeto :rocket:
 
 ### 1 Passo -
 
@@ -19,3 +19,8 @@ Clone o repositório para sua máquina e rode o comando `yarn install` ou `npm i
 ### 2 Passo -
 
 Com as dependencias instaladas, basta rodar o comando ```yarn start``` para rodar o servidor de desenovlvimento.
+
+
+----
+
+Após finalizar esses passos, você já pode testar a API juntamente com o [Back-End](https://github.com/highotz/tcespBackend).
